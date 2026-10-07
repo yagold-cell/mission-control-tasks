@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-heebo), system-ui, sans-serif;
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+  --color-line: #e7e9f0;
+  --color-canvas: #f5f6fa;
+  --color-brand: #5b5bd6;
+  --color-brand-dark: #4646b8;
+  --color-brand-soft: #eef0ff;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-pop: 0 10px 30px -8px rgb(15 23 42 / 0.25), 0 4px 10px -4px rgb(15 23 42 / 0.1);
+  --animate-fade-in: fade-in 0.18s ease-out;
+  --animate-pop-in: pop-in 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  --animate-slide-up: slide-up 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.96) translateY(6px) } to { opacity: 1; transform: none } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(16px) scale(0.98) } to { opacity: 1; transform: none } }
+@keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: .4 } 30% { transform: translateY(-4px); opacity: 1 } }
+
+html, body { background: var(--color-canvas); color: var(--color-ink); }
+body { -webkit-font-smoothing: antialiased; }
+
+.typing-dot { animation: typing 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: .15s }
+.typing-dot:nth-child(3) { animation-delay: .3s }
+
+.scroll-thin { scrollbar-width: thin; scrollbar-color: #cfd3de transparent; }
+
+input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: .6; }
