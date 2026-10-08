@@ -375,7 +375,8 @@ export async function runAgent(history: { role: "user" | "assistant"; content: s
   ];
 
   for (let step = 0; step < 8; step++) {
-    const res = await client.chat.completions.create({ model: MODEL, messages, tools: TOOLS, tool_choice: "auto" });
+    // This model rejects function tools unless reasoning is off on /v1/chat/completions.
+    const res = await client.chat.completions.create({ model: MODEL, messages, tools: TOOLS, tool_choice: "auto", reasoning_effort: "none" });
     const msg = res.choices[0]?.message;
     if (!msg) break;
     const calls = msg.tool_calls ?? [];
