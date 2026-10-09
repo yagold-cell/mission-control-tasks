@@ -13,6 +13,7 @@ function createClient() {
     max: 3,
     idle_timeout: 20,
     prepare: false,
+    onnotice: () => {},
     // keep DATE columns as plain YYYY-MM-DD strings
     types: { date: { to: 1082, from: [1082], serialize: (x: string) => x, parse: (x: string) => x } },
   });

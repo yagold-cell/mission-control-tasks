@@ -20,7 +20,7 @@ if (!url) {
   process.exit(1);
 }
 
-const sql = postgres(url, { ssl: /localhost|127\.0\.0\.1/.test(url) ? false : "require", max: 1, prepare: false });
+const sql = postgres(url, { ssl: /localhost|127\.0\.0\.1/.test(url) ? false : "require", max: 1, prepare: false, onnotice: () => {} });
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS spaces (
