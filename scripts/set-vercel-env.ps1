@@ -45,7 +45,16 @@ $ErrorActionPreference = "Continue"
 function Set-Var($name, $value, $environment) {
   # Remove first so a re-run updates instead of failing on "already exists".
   cmd /c "npx vercel env rm $name $environment --yes >nul 2>&1"
-  $value | cmd /c "npx vercel env add $name $environment >nul 2>&1"
+  # Piping ($value | cmd ...) makes PowerShell 5.1 append \r\n, which Vercel then
+  # stores as part of the value (exact-match password checks fail). Feed stdin
+  # from a temp file that holds the bare value instead.
+  $tmp = [IO.Path]::GetTempFileName()
+  try {
+    [IO.File]::WriteAllText($tmp, $value, (New-Object Text.UTF8Encoding($false)))
+    cmd /c "npx vercel env add $name $environment <""$tmp"" >nul 2>&1"
+  } finally {
+    Remove-Item $tmp -Force -ErrorAction SilentlyContinue
+  }
   if ($LASTEXITCODE -eq 0) { Write-Host "  OK   $name -> $environment" }
   else { Write-Host "  FAIL $name -> $environment  (exit $LASTEXITCODE)" }
 }
